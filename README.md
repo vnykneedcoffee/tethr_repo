@@ -41,7 +41,7 @@ In the Vercel project, add these environment variables for **Production** (and P
 
 Then redeploy. The frontend never receives the API key.
 
-After deployment, open `/api/health`. It should return `ok: true`, `geminiConfigured: true`, and `model: "gemini-2.5-flash"`. This confirms that Vercel is loading the environment variable before you test the chat.
+After deployment, open `/api/health`. It should return `ok: true`, `geminiConfigured: true`, and `model: "gemini-3.6-flash"`. This confirms that Vercel is loading the environment variable before you test the chat.
 
 ## What is included
 
