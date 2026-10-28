@@ -1,0 +1,853 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <meta
+    name="theme-color"
+    content="#0c1410"
+  >
+
+  <meta
+    name="description"
+    content="Tethr — a quieter place to get your footing back."
+  >
+
+  <meta
+    name="robots"
+    content="index,follow"
+  >
+
+  <meta
+    property="og:title"
+    content="Tethr — The world is loud. You don't have to be."
+  >
+
+  <meta
+    property="og:description"
+    content="A calm digital space to pause, breathe, and get your footing back."
+  >
+
+  <link
+    rel="icon"
+    href="./favicon.svg"
+  >
+
+  <link
+    rel="stylesheet"
+    href="./styles.css"
+  >
+
+  <title>
+    Tethr — The world is loud. You don't have to be.
+  </title>
+</head>
+
+<body>
+
+  <main id="app">
+
+    <!-- ======================================================
+         INTRO
+         ====================================================== -->
+
+    <section
+      id="intro"
+      class="screen intro-screen"
+    >
+
+      <div class="intro-content">
+
+        <div class="intro-kicker">
+          ONE THING AT A TIME
+        </div>
+
+        <div class="intro-line"></div>
+
+        <h1
+          id="introText"
+          class="intro-text"
+          aria-live="polite"
+        ></h1>
+
+        <button
+          id="skipIntro"
+          class="intro-skip"
+          type="button"
+        >
+          SKIP
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- ======================================================
+         WELCOME
+         ====================================================== -->
+
+    <section
+      id="welcome"
+      class="screen welcome is-hidden"
+    >
+
+      <div class="welcome-content">
+
+        <div class="logo">
+          <span class="logo-mark">◌</span>
+          <span>TETHR</span>
+        </div>
+
+        <div class="welcome-kicker">
+          A QUIETER PLACE
+        </div>
+
+        <h1>
+          Welcome to Tethr.
+        </h1>
+
+        <p class="welcome-manifesto">
+          The world is loud.<br>
+          <em>You don't have to be.</em>
+        </p>
+
+        <button
+          id="enterButton"
+          class="enter"
+          type="button"
+        >
+          ENTER
+        </button>
+
+        <p class="welcome-note">
+          No account. No score. No need to stay.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- ======================================================
+         MAIN WORLD
+         ====================================================== -->
+
+    <section
+      id="world"
+      class="screen world is-hidden"
+      aria-label="Tethr environment"
+    >
+
+      <div
+        class="scene"
+        aria-hidden="true"
+      >
+
+        <img
+          src="./assets/environment.png"
+          alt=""
+        >
+
+        <div
+          class="leaves"
+          id="leaves"
+        ></div>
+
+      </div>
+
+
+      <!-- ====================================================
+           TOP BAR
+           ==================================================== -->
+
+      <header class="topbar">
+
+        <div class="logo">
+          <span class="logo-mark">◌</span>
+          <span>TETHR</span>
+        </div>
+
+        <div class="controls">
+
+          <button
+            id="soundButton"
+            class="quiet-control"
+            type="button"
+            aria-label="Toggle soundscape"
+          >
+            <span aria-hidden="true">
+              ◖
+            </span>
+
+            <span class="sound-label">
+              Soundscape
+            </span>
+          </button>
+
+          <input
+            id="volume"
+            class="volume"
+            type="range"
+            min="0"
+            max="1"
+            step=".01"
+            value=".62"
+            aria-label="Soundscape volume"
+          >
+
+          <button
+            id="settingsButton"
+            class="quiet-control"
+            type="button"
+            aria-label="Open quiet settings"
+          >
+            ⚙
+          </button>
+
+        </div>
+
+      </header>
+
+
+      <!-- ====================================================
+           LEVEL PICKER
+           ==================================================== -->
+
+      <div
+        id="picker"
+        class="picker"
+      >
+
+        <div class="picker-symbol">
+          ✦
+        </div>
+
+        <h2>
+          Where are you right now?
+        </h2>
+
+        <div
+          id="levelGrid"
+          class="level-grid"
+        ></div>
+
+        <div class="stay-note">
+          You can stay as long as you want.
+        </div>
+
+      </div>
+
+
+      <!-- ====================================================
+           EXPERIENCE
+           ==================================================== -->
+
+      <div
+        id="experience"
+        class="experience is-hidden"
+      >
+
+        <div
+          id="experienceInner"
+          class="experience-inner"
+        ></div>
+
+      </div>
+
+
+      <!-- ====================================================
+           BOTTOM BAR
+           ==================================================== -->
+
+      <footer class="bottom-bar">
+
+        <button
+          id="aboutButton"
+          class="quiet-control about"
+          type="button"
+        >
+          ? &nbsp;About
+        </button>
+
+        <button
+          id="breakButton"
+          class="quiet-control"
+          type="button"
+        >
+          ☼ &nbsp;Take a break
+        </button>
+
+      </footer>
+
+    </section>
+
+  </main>
+
+
+  <!-- ========================================================
+       MODAL
+       ======================================================== -->
+
+  <div
+    id="modal"
+    class="modal"
+    aria-hidden="true"
+  ></div>
+
+
+  <!-- ========================================================
+       TOAST
+       ======================================================== -->
+
+  <div
+    id="toast"
+    class="toast"
+    role="status"
+    aria-live="polite"
+  ></div>
+
+
+  <!-- ========================================================
+       MUDRIX CAMERA
+       ======================================================== -->
+
+  <video
+    id="mudrixCamera"
+    autoplay
+    playsinline
+    muted
+    style="display:none;"
+  ></video>
+
+
+  <!-- ========================================================
+       APP
+       ======================================================== -->
+
+  <script
+    type="module"
+    src="./src/app.js"
+  ></script>
+
+
+  <!-- ========================================================
+       INTRO + AMBIENT EFFECTS
+       ======================================================== -->
+
+  <script>
+
+    /*
+     * ========================================================
+     * INTRO TYPEWRITER
+     * ========================================================
+     *
+     * IMPORTANT:
+     * There is exactly ONE typing controller.
+     *
+     * If the intro is skipped or restarted, the previous
+     * animation is cancelled before a new one begins.
+     *
+     * This prevents the scrambled-text bug.
+     */
+
+    (() => {
+
+      const intro =
+        document.getElementById("intro");
+
+      const introText =
+        document.getElementById("introText");
+
+      const skipButton =
+        document.getElementById("skipIntro");
+
+      const welcome =
+        document.getElementById("welcome");
+
+
+      if (
+        !intro ||
+        !introText ||
+        !skipButton ||
+        !welcome
+      ) {
+        return;
+      }
+
+
+      const lines = [
+
+        "Set yourself here for a moment.",
+
+        "Feel where you're sitting.",
+
+        "You don't have to solve everything right now.",
+
+        "Just stay for this moment."
+
+      ];
+
+
+      let typingToken =
+        0;
+
+      let timeoutId =
+        null;
+
+      let currentLine =
+        0;
+
+      let introFinished =
+        false;
+
+
+      /*
+       * --------------------------------------------------------
+       * SAFE WAIT
+       * --------------------------------------------------------
+       */
+
+      function wait(ms) {
+
+        return new Promise(resolve => {
+
+          timeoutId =
+            setTimeout(
+              resolve,
+              ms
+            );
+
+        });
+
+      }
+
+
+      /*
+       * --------------------------------------------------------
+       * TYPE ONE LINE
+       * --------------------------------------------------------
+       */
+
+      async function typeLine(
+        text,
+        token
+      ) {
+
+        introText.textContent =
+          "";
+
+        introText.classList.add(
+          "is-typing"
+        );
+
+
+        for (
+          let i = 0;
+          i < text.length;
+          i++
+        ) {
+
+          /*
+           * If another intro animation has
+           * started, immediately stop this one.
+           */
+
+          if (
+            token !== typingToken
+          ) {
+            return false;
+          }
+
+
+          introText.textContent =
+            text.slice(
+              0,
+              i + 1
+            );
+
+
+          /*
+           * Slightly organic typing rhythm.
+           * Punctuation gets a tiny pause.
+           */
+
+          const character =
+            text[i];
+
+          let delay =
+            38;
+
+
+          if (
+            character === "," ||
+            character === "—"
+          ) {
+
+            delay =
+              110;
+
+          }
+
+
+          if (
+            character === "." ||
+            character === "!"
+          ) {
+
+            delay =
+              180;
+
+          }
+
+
+          await wait(
+            delay
+          );
+
+        }
+
+
+        introText.classList.remove(
+          "is-typing"
+        );
+
+
+        return (
+          token === typingToken
+        );
+      }
+
+
+      /*
+       * --------------------------------------------------------
+       * TRANSITION TO WELCOME
+       * --------------------------------------------------------
+       */
+
+      function finishIntro() {
+
+        if (
+          introFinished
+        ) {
+          return;
+        }
+
+
+        introFinished =
+          true;
+
+
+        typingToken++;
+
+
+        clearTimeout(
+          timeoutId
+        );
+
+
+        intro.classList.add(
+          "is-leaving"
+        );
+
+
+        setTimeout(() => {
+
+          intro.classList.add(
+            "is-hidden"
+          );
+
+          welcome.classList.remove(
+            "is-hidden"
+          );
+
+
+          requestAnimationFrame(() => {
+
+            welcome.classList.add(
+              "is-visible"
+            );
+
+          });
+
+        }, 850);
+
+      }
+
+
+      /*
+       * --------------------------------------------------------
+       * PLAY INTRO
+       * --------------------------------------------------------
+       */
+
+      async function playIntro() {
+
+        const token =
+          ++typingToken;
+
+
+        introFinished =
+          false;
+
+
+        clearTimeout(
+          timeoutId
+        );
+
+
+        intro.classList.remove(
+          "is-hidden",
+          "is-leaving"
+        );
+
+
+        welcome.classList.add(
+          "is-hidden"
+        );
+
+
+        welcome.classList.remove(
+          "is-visible"
+        );
+
+
+        currentLine =
+          0;
+
+
+        while (
+          currentLine <
+          lines.length
+        ) {
+
+          if (
+            token !== typingToken
+          ) {
+            return;
+          }
+
+
+          const successful =
+            await typeLine(
+              lines[currentLine],
+              token
+            );
+
+
+          if (
+            !successful ||
+            token !== typingToken
+          ) {
+            return;
+          }
+
+
+          /*
+           * Give the user enough time to actually
+           * read the sentence.
+           */
+
+          await wait(
+            currentLine ===
+              lines.length - 1
+              ? 1400
+              : 900
+          );
+
+
+          currentLine++;
+        }
+
+
+        if (
+          token === typingToken
+        ) {
+
+          finishIntro();
+
+        }
+
+      }
+
+
+      /*
+       * --------------------------------------------------------
+       * SKIP
+       * --------------------------------------------------------
+       */
+
+      skipButton.addEventListener(
+        "click",
+        () => {
+
+          finishIntro();
+
+        }
+      );
+
+
+      /*
+       * --------------------------------------------------------
+       * START
+       * --------------------------------------------------------
+       */
+
+      playIntro();
+
+    })();
+
+
+    /*
+     * ========================================================
+     * FLOATING LEAVES
+     * ========================================================
+     */
+
+    (() => {
+
+      const leaves =
+        document.getElementById(
+          "leaves"
+        );
+
+      if (!leaves) {
+        return;
+      }
+
+
+      const prefersReduced =
+        window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+
+      if (
+        prefersReduced
+      ) {
+        return;
+      }
+
+
+      function spawnLeaf() {
+
+        const world =
+          document.getElementById(
+            "world"
+          );
+
+
+        if (
+          document.hidden ||
+          !world ||
+          !world.classList.contains(
+            "is-visible"
+          )
+        ) {
+
+          return;
+
+        }
+
+
+        const leaf =
+          document.createElement(
+            "i"
+          );
+
+
+        leaf.className =
+          "leaf";
+
+
+        leaf.style.setProperty(
+          "--left",
+          `${18 + Math.random() * 45}%`
+        );
+
+
+        leaf.style.setProperty(
+          "--top",
+          `${10 + Math.random() * 18}%`
+        );
+
+
+        leaf.style.setProperty(
+          "--drift",
+          `${-60 + Math.random() * 120}px`
+        );
+
+
+        leaf.style.setProperty(
+          "--dur",
+          `${7 + Math.random() * 7}s`
+        );
+
+
+        leaf.style.setProperty(
+          "--rot",
+          `${Math.random() * 180}deg`
+        );
+
+
+        leaves.appendChild(
+          leaf
+        );
+
+
+        setTimeout(
+          () => {
+
+            leaf.remove();
+
+          },
+          15000
+        );
+
+      }
+
+
+      setInterval(
+        spawnLeaf,
+        4200
+      );
+
+    })();
+
+
+    /*
+     * ========================================================
+     * REDUCED MOTION
+     * ========================================================
+     */
+
+    (() => {
+
+      const reduced =
+        window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        );
+
+
+      if (
+        reduced.matches
+      ) {
+
+        document.documentElement
+          .classList.add(
+            "reduced-motion"
+          );
+
+      }
+
+    })();
+
+  </script>
+
+</body>
+</html>
